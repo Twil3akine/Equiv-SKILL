@@ -1,0 +1,6 @@
+interface:
+  display_name: "equiv"
+  short_description: "Engineering with an independent audit layer"
+  default_prompt: "Run this project task through equiv's Engineering and independent Audit workflow."
+policy:
+  allow_implicit_invocation: false
