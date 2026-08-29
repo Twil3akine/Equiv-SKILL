@@ -49,16 +49,16 @@ The goal is not to manufacture disagreement. Audit should approve correct work a
 
 ## Default model layout
 
-| Role | Default | Responsibility |
-| --- | --- | --- |
-| Main / CEO | GPT-5.6 Sol, medium | User interface, routing, persistence, final report |
-| `equiv-engineer-main` | GPT-5.6 Sol, high | Technical lead; proposal, decisions, responses to audit |
-| `equiv-engineer-implementer` | GPT-5.6 Terra, high | Scoped code changes and validation |
-| `equiv-engineer-assistant` | GPT-5.6 Luna, medium | Disposable bounded engineering investigations |
-| `equiv-observer-main` | GPT-5.6 Terra, high | Independent technical audit |
-| `equiv-observer-assistant` | GPT-5.6 Luna, medium | Disposable bounded evidence gathering |
+| Role | Model identifier | Reasoning | Sandbox | Responsibility |
+| --- | --- | --- | --- | --- |
+| Main / CEO (parent session) | `gpt-5.6-sol` | `medium` | Parent session setting | User interface, routing, persistence, final report |
+| `equiv-engineer-main` | `gpt-5.6-sol` | `high` | `read-only` | Technical lead; proposal, decisions, responses to audit |
+| `equiv-engineer-implementer` | `gpt-5.6-terra` | `high` | `workspace-write` | Scoped code changes and validation |
+| `equiv-engineer-assistant` | `gpt-5.6-luna` | `medium` | `read-only` | Disposable bounded engineering investigations |
+| `equiv-observer-main` | `gpt-5.6-terra` | `high` | `read-only` | Independent technical audit |
+| `equiv-observer-assistant` | `gpt-5.6-luna` | `medium` | `read-only` | Disposable bounded evidence gathering |
 
-The Skill cannot force the model used by the parent Codex session, so select Sol / medium for the main session if you want the default layout above.
+Main / CEO is the parent Codex session, not a custom agent. The Skill cannot force that session's model or reasoning level, so select `gpt-5.6-sol` / `medium` on the parent session when you want the default layout above.
 
 `xhigh` is intentionally not the default. Raise the relevant agent configuration only when representative tasks show that the extra reasoning cost is useful.
 
@@ -183,6 +183,10 @@ engineer: disagree
 engineer-reason: The caller performs the check before entering this path.
 next: Observer verifies the caller guarantee.
 ```
+
+If Engineering accepts an Audit finding that requires a code change, Engineering Main creates one bounded correction order. Main / CEO relays that order, without adding technical content, to the same `equiv-engineer-implementer`. The implementer returns the updated diff and validation, Main records them in `engineer.md`, and Observer Main performs one final verification pass.
+
+No additional debate round is opened after that final verification. A failed correction or remaining material disagreement is recorded as unresolved and reported by Main / CEO without technical adjudication.
 
 ### 6. Main reports, but does not adjudicate
 

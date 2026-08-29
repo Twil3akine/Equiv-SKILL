@@ -81,12 +81,14 @@ For each open material issue:
 
 1. Relay the issue to `equiv-engineer-main`.
 2. Persist Engineering's `accept`, `disagree`, or `uncertain` position and evidence.
-3. Relay that updated issue to `equiv-observer-main` for one final verification pass.
-4. Persist Audit's final `resolved`, `still-disputed`, or `withdrawn` status.
+3. If Engineering accepts the finding and a code change is required, Engineering Main must return one bounded correction order. Relay that order unchanged to the same `equiv-engineer-implementer`; the CEO must not design or amend the correction.
+4. Persist the implementer's updated diff / changed-files summary and validation in `.equiv/active/engineer.md`. If the correction cannot be completed, record the failure as unresolved instead of having the CEO implement or redesign it.
+5. Relay the updated issue and, when applicable, the correction result to `equiv-observer-main` for one final verification pass.
+6. Persist Audit's final `resolved`, `still-disputed`, or `withdrawn` status.
 
 Normally stop after this one Engineering response plus one final Audit pass.
 
-Do not create extra rounds merely to force consensus. A material unresolved issue belongs in the final user report.
+Do not create an additional debate or correction round merely to force consensus. A failed correction or material issue that remains after final verification is unresolved and belongs in the final user report.
 
 ## Phase 5: result
 

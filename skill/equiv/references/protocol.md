@@ -4,6 +4,28 @@ All runtime communication lives under `<repo>/.equiv/`.
 
 The CEO owns persistence. Technical departments return structured content; the CEO writes it without changing technical meaning.
 
+## Layout and lifecycle
+
+Each task uses this runtime-only workspace:
+
+```text
+.equiv/
+├── .gitignore
+├── state.md
+├── invariants.md
+├── active/
+│   ├── brief.md
+│   ├── engineer.md
+│   ├── observer.md
+│   ├── issues.md
+│   └── result.md
+└── archive/
+```
+
+Run `scripts/start-task.sh` from the target repository to initialize it. On a later run, a non-empty `active/` is moved to a collision-safe timestamped directory under `archive/`, then the five active documents are recreated empty. `state.md` and `invariants.md` are preserved across tasks. Keep `archive/` out of normal context unless the current request explicitly depends on a prior equiv task.
+
+The generated `.equiv/.gitignore` ignores all runtime documents except itself, so task state does not enter normal project history by default.
+
 ## `.equiv/state.md`
 
 Keep only current project facts that are useful across tasks.
